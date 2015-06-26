@@ -1,4 +1,5 @@
 <?php	
+
 if(isset($_POST['login'])) {
 	$db_name="users"; // Database name 
 	$tbl_name="members"; // Table name 
@@ -10,7 +11,7 @@ if(isset($_POST['login'])) {
 	$username=$_POST['username']; 
 	$password=$_POST['pass']; 
 
-	// To protect MySQL injection (more detail about MySQL injection)
+	// To protect MySQL injection
 	$username = stripslashes($username);
 	$password = stripslashes($password);
 	$username = mysql_real_escape_string($username);
