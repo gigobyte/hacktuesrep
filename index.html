@@ -33,6 +33,7 @@
 
 <body>
 	<div id="wrapper">
+	<?php session_start(); ?>
 	
         <!-- Navigation -->
 	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -263,18 +264,26 @@
                         <li>
                             <a href="index.html"><i class="fa fa-home fa-fw"></i> Начало</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-book fa-fw"></i> Дневник<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Flot Charts</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+						<?php
+
+						if(isset($_SESSION['username'])) {
+							$username = $_SESSION['username'];
+						
+							echo '<li>
+								<a href="#"><i class="fa fa-book fa-fw"></i> Дневник<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="flot.html">Flot Charts</a>
+									</li>
+									<li>
+										<a href="morris.html">Morris.js Charts</a>
+									</li>
+								</ul>
+								<!-- /.nav-second-level -->
+							</li>';
+						}
+						
+						?>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
