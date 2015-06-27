@@ -1,6 +1,7 @@
 <?php	
 
 if(isset($_POST['submit'])) {
+	session_start();
 	$db_name="users"; // Database name 
 	$tbl_name="members"; // Table name 
 
