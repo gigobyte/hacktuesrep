@@ -269,14 +269,19 @@
 							$data = array();
 							$answers = 1;
 							
-							for ($i = 1; $i <= $number_of_questions; $i++, $answers) {
-								$data[$_POST['question'.$i]] = $_POST['qoption'.$answers++];
-								$data[$_POST['question'.$i]] = $_POST['qoption'.$answers++];
-								$data[$_POST['question'.$i]] = $_POST['qoption'.$answers++];
-								$data[$_POST['question'.$i]] = $_POST['qoption'.$answers++];
-							}
+							$data["class"] = $_POST['class'];
+							$data["subject"] = $_POST['subject'];
 							
-							print_r($data);
+							for ($i = 1; $i <= $number_of_questions; $i++, $answers) {
+								$qoptions = array();
+								array_push($qoptions, $_POST['qoption'.$answers++]);
+								array_push($qoptions, $_POST['qoption'.$answers++]);
+								array_push($qoptions, $_POST['qoption'.$answers++]);
+								array_push($qoptions, $_POST['qoption'.$answers++]);
+								$data[$_POST['question'.$i]] = $qoptions;
+							}
+		
+							file_put_contents($filename, json_encode($data));
 						}
 					 ?>
 				  </div>
