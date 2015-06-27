@@ -273,8 +273,8 @@
 							echo '<li>
 								<a href="#"><i class="fa fa-book fa-fw"></i> Дневник<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
-<li>
-										<a href="dnevnik_marks.html">Оценки</a>
+									<li>
+										<a href="flot.html">Оценки</a>
 									</li>
 									<li>
 										<a href="morris.html">Забележки и отсъствия</a>
@@ -304,61 +304,10 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<?php
-							if(isset($_SESSION['username'])) {
-								$username = $_SESSION['username'];
-
-								$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
-								$select_db = mysql_select_db('users');
-								$query = "SELECT name,lastname FROM `members` WHERE username='$username'";
-								$result = mysql_query($query) or die(mysql_error());
-								$info = mysql_fetch_row($result);
-
-								echo '<h1 class="page-header">Добре дошли, ' . $info[0] . ' ' . $info[1]. '!</h1>';
-							} else {
-								echo '<h1 class="page-header">Добре дошли!';
-							}
-						?>
+						<h1 class="page-header">Оценки</h1>
 					</div>
 				</div>
-				  
-				<?php
-					include('php/parse_elsys.php');
 
-					$news = get_news();
-					
-					echo '<div class="row">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<i class="fa fa-bell fa-fw"></i> Съобщения
-								</div>
-
-								<div class="panel-body">
-									<div class="list-group">';
-										foreach($news as $new) {
-											show_message($new[1], $new[0]);
-										}
-									echo '</div>
-								</div>
-							</div></div>'. "\n\n\t\t\t\t";
-							
-					$posts = get_blog();
-							
-					echo '<div class="row">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<i class="fa fa-bell fa-fw"></i> Блог
-								</div>
-
-								<div class="panel-body">
-									<div class="list-group">';
-										foreach($posts as $post) {
-											show_message($post[1], $post[0]);
-										}
-									echo '</div>
-								</div>
-							</div>';	
-				?>
 				  <!-- /.col-lg-12 -->
 				</div>
 			    <!-- /.row -->

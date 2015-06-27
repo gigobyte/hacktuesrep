@@ -21,6 +21,7 @@ if(isset($_POST['submit'])) {
 
 	if(mysql_num_rows($result) > 0){
 		$_SESSION['username'] = $username;
+		$_SESSION['password'] = $password;
 		if(isset($_POST['username']) && isset($_POST['password'])){
 			header( "Location: ../index.html" );
 		}
