@@ -1,6 +1,6 @@
 <?php	
 
-if(isset($_POST['login'])) {
+if(isset($_POST['submit'])) {
 	$db_name="users"; // Database name 
 	$tbl_name="members"; // Table name 
 
@@ -9,7 +9,7 @@ if(isset($_POST['login'])) {
 
 	// username and password sent from form 
 	$username=$_POST['username']; 
-	$password=$_POST['pass']; 
+	$password=$_POST['password']; 
 
 	// To protect MySQL injection
 	$username = stripslashes($username);
@@ -20,10 +20,13 @@ if(isset($_POST['login'])) {
 	$select_db = mysql_select_db('users');
 	$query = "SELECT * FROM `members` WHERE username='$username' and password='$password'";
 	$result = mysql_query($query) or die(mysql_error());
-	$count = mysql_num_rows($result);
-	if ($count == 1){
+
+	if(mysql_num_rows($result) > 0){
 		$_SESSION['username'] = $username;
-		header( "Location: http://localhost/CardBazarBg/index.php" );
+		if(isset($_POST['username']) && isset($_POST['password'])){
+			header( "Location: ../index.html" );
+		}
+		
 	}else{
 		echo "<p style=\" color:red; font-size: 10px\">Username и Парола не съвпадат!</p>";
 	}
