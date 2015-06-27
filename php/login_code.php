@@ -1,10 +1,6 @@
 <?php	
 
 if(isset($_POST['submit'])) {
-	session_start();
-	$db_name="users"; // Database name 
-	$tbl_name="members"; // Table name 
-
 	// Connect to server and select databse.
 	$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 
