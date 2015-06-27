@@ -247,6 +247,54 @@
 					<div class="col-lg-12">
 						<h1 class="page-header">Оценки</h1>
 					</div>
+					
+					<script type="text/javascript">
+						function generate_step2() {
+							var div = document.getElementById('step1text');
+							div.innerHTML = '<font color="green">Стъпка 1. Изберете клас</font> <i class="fa fa-check fa-fw" style="color: green;">';
+						
+							var div = document.getElementById('step1');
+							div.innerHTML = div.innerHTML + '<br><div class="form-group"><div id="step1"><label>Стъпка 2. Изберете предмет</label><select class="form-control" onchange="if (this.selectedIndex) generate_step3();"><option>8А</option><option>8Б</option><option>8В</option><option>9А</option><option>9Б</option><option>9В</option><option>10А</option><option>10Б</option><option>10В</option><option>11А</option><option>11Б</option><<option>11Г</option><<option>12В</option></select></div></div>';
+						}
+						
+						function generate_step3() {
+							var div = document.getElementById('step2text');
+							div.innerHTML = '<font color="green">Стъпка 2. Изберете предмет</font> <i class="fa fa-check fa-fw" style="color: green;">';
+							
+							var div = document.getElementById('step1');
+							div.innerHTML = div.innerHTML + '<br><div class="form-group"><div id="step1"><label>Стъпка 2. Изберете предмет</label><select class="form-control" onchange="if (this.selectedIndex) generate_step3();"><option>8А</option><option>8Б</option><option>8В</option><option>9А</option><option>9Б</option><option>9В</option><option>10А</option><option>10Б</option><option>10В</option><option>11А</option><option>11Б</option><<option>11Г</option><<option>12В</option></select></div></div>';
+						}
+					</script>
+					
+					<?php
+						if($_SESSION['username'] == 'uchitel' &&
+							$_SESSION['password'] == 'uchitel') {
+								echo '<div class="form-group">
+										<div id="step1">
+                                            <label><div id="step1text">Стъпка 1. Изберете клас</div></label>
+                                            <select class="form-control" onchange="if (this.selectedIndex) generate_step2();">
+												<option>8А</option>
+												<option>8Б</option>
+												<option>8В</option>
+												<option>9А</option>
+												<option>9Б</option>
+												<option>9В</option>
+												<option>10А</option>
+												<option>10Б</option>
+												<option>10В</option>
+												<option>11А</option>
+												<option>11Б</option>
+												<option>11В</option>
+												<option>11Г</option>
+												<option>12А</option>
+												<option>12Б</option>
+												<option>12В</option>
+												<option>12Г</option>
+                                            </select>
+											</div>
+                                       </div>';
+							}
+					?>
 				</div>
 
 				  <!-- /.col-lg-12 -->
