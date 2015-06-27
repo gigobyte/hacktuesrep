@@ -32,6 +32,9 @@
 	function generate() {
 		n++;
 		document.getElementById("number_of_questions").value = n;
+		var delimiter = document.createElement("br");
+		document.getElementById("form").appendChild(delimiter);
+		document.getElementById("form").appendChild(delimiter);
 		for(var i = 0;i < 5;++i) {
 			var wraper = document.createElement("div");
 			var value = document.createElement("span");
@@ -67,5 +70,7 @@
 			document.getElementById(id).appendChild(value);
 			document.getElementById(id).appendChild(element);
 		}
+		document.getElementById("form").appendChild(delimiter);
+		document.getElementById("form").appendChild(delimiter);
 	}
 </script>
