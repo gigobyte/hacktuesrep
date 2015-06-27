@@ -249,6 +249,16 @@
 					</div>
 					
 					<script type="text/javascript">
+						function show_table() {
+							var xmlhttp = new XMLHttpRequest();
+							var url = "dnevnik_marks.html";
+							xmlhttp.open("POST", url);
+							xmlhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+							var data = [true];
+							data = JSON.stringify(data);
+							xmlhttp.send(data);
+						}
+					
 						function generate_step2() {
 							var div = document.getElementById('step1text');
 							div.innerHTML = '<font color="green">Стъпка 1. Изберете клас</font> <i class="fa fa-check fa-fw" style="color: green;">';
@@ -260,7 +270,8 @@
 						function generate_step3() {
 							var div = document.getElementById('step2text');
 							div.innerHTML = '<font color="green">Стъпка 2. Изберете предмет</font> <i class="fa fa-check fa-fw" style="color: green;">';
-							var div = document.getElementById('step2');
+							var div = document.getElementById('step3');
+							div.innerHTML = div.innerHTML + '<button type="button" onclick="show_table()" class="btn btn-success">Покажи</button>';
 						}
 					</script>
 					
@@ -270,13 +281,13 @@
 						mysql_select_db('users');
 						$query = "SELECT * FROM marks";
 						$result = mysql_query($query);
-						echo $result;
 
 						if($_SESSION['username'] == 'uchitel' &&
 							$_SESSION['password'] == 'uchitel') {
 
 							
-								echo '<div class="form-group">
+								echo '	<form 
+										<div class="form-group">
 										<label><div id="step1text">Стъпка 1. Изберете клас</div></label>
 											<select class="form-control" onchange="generate_step2();">
 												<option>8А</option>
@@ -299,8 +310,9 @@
                                             </select>
 									  </div>
 									  
-									  <div id="step1"></div>';
-									  echo'<div class="dataTable_wrapper" id = "print">
+									  <div id="step1"></div>
+									  <div id="step3"></div>';
+									  /* echo'<div class="dataTable_wrapper" id = "print">
 		                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
 		                                    <thead>
 		                                        <tr>
@@ -324,7 +336,7 @@
 							}
 							 echo'</tbody>
 		                                </table>
-	                               </div>';
+	                               </div>'; */
 						}
 					?>
 				</div>
