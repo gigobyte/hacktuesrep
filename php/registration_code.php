@@ -36,8 +36,9 @@
 			
 
 		if ($password2 == $password) {
-			mysql_query("INSERT INTO members (name, middlename, lastname, class, classnum, username, password, email )
-			VALUES ('$name', '$middlename', '$lastname', '$class', '$classnum', '$username', '$password', '$email')") or die(mysql_error());
+			$query = "INSERT INTO members (name, middlename, lastname, class, classnum, username, password, email )
+			VALUES ('$name', '$middlename', '$lastname', '$class', '$classnum', '$username', '$password', '$email')";
+			mysql_query($query) or die(mysql_error());
 			header('Location: index.html');
 		} elseif ($repeat_password != $password) {
 			echo "<script type='text/javascript'>alert('Грешна Парола!');</script>";
