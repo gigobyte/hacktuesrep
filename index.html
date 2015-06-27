@@ -198,7 +198,7 @@
 			} else {
 				echo '<ul class="nav navbar-top-links navbar-right">
 						<li class="dropdown">
-							<button onclick="window.location.href=\'login.html\'" type="button" class="btn btn-success" style = "margin-top:8px;">Влез</button>
+							<button onclick="window.location.href=\'login.html\'" type="button" class="btn btn-success">Влез</button>
 						</li></ul>';
 			}
 		?>
@@ -248,9 +248,11 @@
 						<?php
 							if(isset($_SESSION['username'])) {
 								$username = $_SESSION['username'];
+								
 
 								$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 								$select_db = mysql_select_db('users');
+								mysql_query("set names 'utf8'");
 								$query = "SELECT name,lastname FROM `members` WHERE username='$username'";
 								$result = mysql_query($query) or die(mysql_error());
 								$info = mysql_fetch_row($result);
