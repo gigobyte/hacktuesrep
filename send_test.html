@@ -247,24 +247,31 @@
 					<div class="col-lg-12">
 					 <?php
 						if(isset($_POST['submit'])) {
-							session_start();
-
-							$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
-							$sql = "CREATE TABLE MyGuests (
-									id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-									firstname VARCHAR(30) NOT NULL,
-									lastname VARCHAR(30) NOT NULL,
-									email VARCHAR(50),
-									reg_date TIMESTAMP
-									)";
-
-							if ($connection->query($sql) === TRUE) {
-								
-							} else {
-								echo "Error creating table: " . $connection->error;
+							$number_of_questions = 2;
+						
+							$files = glob('json/*.json');
+							//Counts the number of tests in the database
+							foreach($files as $file)
+							{
+								$count++;
 							}
-
-							$connection->close();
+							
+							$arr = array("0", "0", "0", "0", "0");
+							//Counts the digits in $count, which is the number of tests
+							$count_digits = preg_match_all( "/[0-9]/", strval($count) );
+							//Cuts digits from 00000 equal to the digits in the post counter
+							$arr = array_slice($arr, $count_digits);
+							//Adds the post counter at the end of $arr
+							$filename = implode("", $arr) . $count;
+							$filename = 'json/' . $filename . '.json';
+							
+							$content = '{
+										"class": '. $_POST['class'] . ',
+										"subject": '. $_POST['subject'] . ',';
+											
+							for($i = 1; $i < $number_of_questions; i++) {
+								$content += '"'. $_POST[$i]
+							}
 						}
 					 ?>
 				  </div>
