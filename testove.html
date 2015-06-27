@@ -28,6 +28,8 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	
+	<?php include('test_code.php') ?>
 
 </head>
 
@@ -225,7 +227,7 @@
 							if($_SESSION['username'] == 'uchitel' &&
 								$_SESSION['password'] == 'uchitel') {
 									echo '<li>
-											<a href="index.html"><i class="fa fa-edit fa-fw"></i> Тестове</a>
+											<a href="test.php"><i class="fa fa-edit fa-fw"></i> Тестове</a>
 											</li>';
 							}
 								
@@ -245,15 +247,14 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Оценки</h1>
+						<h1 class="page-header">Тест</h1>
 
 					<form action="" method="POST">
-					<div id = "form"></div>
-					<button type="button" onclick="generate()" class="btn btn-primary">Добавете въпрос</button>
-					<input type="submit" class="btn btn-outline btn-primary btn-lg btn-block" value = "Създай документ" name="submit"/>
-					<input type= "text" name="number_of_questions"  id="number_of_questions" value="1" style = "display:none;"/>
-					<?php include('test_code.php') ?>
-					<br>
+						<div id = "form"></div>
+						<center><button type="button" onclick="generate()" class="btn btn-primary">Добавете въпрос</button></center><br>
+						<input type="submit" class="btn btn-outline btn-primary btn-lg btn-block" value = "Създай документ" name="submit"/>
+						<input type= "text" name="number_of_questions"  id="number_of_questions" value="1" style = "display:none;"/>
+						<br>
 					</form>
 
 					<script>
@@ -280,19 +281,19 @@
 								var id = wraper.id = element.name;
 								switch(i) {
 									case 0:
-										value.innerHTML = n;
+										value.innerHTML = '<b>' + n + '</b></font>';
 										break;
 									case 1:
-										value.innerHTML = "а";
+										value.innerHTML = "<i>а</i>";
 										break;
 									case 2:
-										value.innerHTML = "б";
+										value.innerHTML = "<i>б</i>";
 										break;
 									case 3:
-										value.innerHTML = "в";
+										value.innerHTML = "<i>в</i>";
 										break;
 									case 4:
-										value.innerHTML = "г";
+										value.innerHTML = "<i>г</i>";
 										break;
 								}
 								document.getElementById("form").appendChild(wraper);
