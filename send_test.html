@@ -28,8 +28,6 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	
-	<?php include('test_code.php') ?>
 
 </head>
 
@@ -247,107 +245,28 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Публикуване на тест</h1>
-						
-						<div class="panel panel-red">
-						<div class="panel-heading">
-                            Внимание!
-						</div>
-						<div class="panel-body">
-                            <p>Избирайки кръгчето вляво от всеки отговор Вие маркирате този отговор за верен</p>
-                        </div>
-                    </div>
-						<form action="send_test.html" method="POST">
-							<?php
-								echo '<div class="panel panel-default">
-									<div class="panel-heading">
-										Изберете верните отговори
-									</div>
-									<div class="panel-body">
-									<div class="panel-group" id="accordion">';
-							
-								$number_of_questions = $_POST['number_of_questions'];
-								$collapseid = 1;
-								$option = 1;
-								
-								for ($i = 1; $i <= $number_of_questions; $i++) {
-									echo '
-											<div class="panel panel-default">
-												<div class="panel-heading">
-													<h4 class="panel-title">
-														<a data-toggle="collapse" data-parent="#accordion" href="#collapse'. $collapseid . '">' . $collapseid . '. ' . $_POST[$i] . '</a>
-													</h4>
-												</div>
-												<div id="collapse'. $collapseid . '" class="panel-collapse collapse">
-													<div class="panel-body">
-														<div class="radio">
-															<label>
-																<input type="radio" name="optionsRadios' . $collapseid . '" id="optionsRadios' . $collapseid . '" value="option' . $option++ . '" checked>'
-																. $_POST[$i . "_1"]. '
-															</label>
-														</div>
-														<div class="radio">
-															<label>
-																<input type="radio" name="optionsRadios' . $collapseid . '" id="optionsRadios' . $collapseid . '" value="option' . $option++ . '" checked>'
-																. $_POST[$i . "_2"]. '
-															</label>
-														</div>
-														<div class="radio">
-															<label>
-																<input type="radio" name="optionsRadios' . $collapseid . '" id="optionsRadios' . $collapseid . '" value="option' . $option++ . '" checked>'
-																. $_POST[$i . "_3"]. '
-															</label>
-														</div>
-														<div class="radio">
-															<label>
-																<input type="radio" name="optionsRadios' . $collapseid . '" id="optionsRadios' . $collapseid . '" value="option' . $option++ . '" checked>'
-																. $_POST[$i . "_4"]. '
-															</label>
-														</div>
-													</div>
-												</div>
-											</div>';
-											
-									$option = 1;
-								}
-								
-								echo '</div></div></div>';
-							?>
-							
-							Тестът е предназначен за клас:<br>
+					 <?php
+						if(isset($_POST['submit'])) {
+							session_start();
 
-							<div class="form-group">
-								<select multiple class="form-control" name = "class">
-									<option>8А</option>
-									<option>8Б</option>
-									<option>8В</option>
-									<option>9А</option>
-									<option>9Б</option>
-									<option>9В</option>
-									<option>10А</option>
-									<option>10Б</option>
-									<option>10В</option>
-									<option>11А</option>
-									<option>11Б</option>
-									<option>11В</option>
-									<option>11Г</option>
-									<option>12А</option>
-									<option>12Б</option>
-									<option>12В</option>
-									<option>12Г</option>
-								</select>
-							</div>
-							<br>
-							Тестът е по предмета:<br>
+							$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
+							$sql = "CREATE TABLE MyGuests (
+									id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+									firstname VARCHAR(30) NOT NULL,
+									lastname VARCHAR(30) NOT NULL,
+									email VARCHAR(50),
+									reg_date TIMESTAMP
+									)";
 
-							<div class="form-group">
-								<select multiple class="form-control" name = "subject">
-									<option>Български език и литература</option><option>Математика</option><option>История</option><option>Английски език</option><option>Руски език</option><option>Физическа култура и спорт</option><option>Философия</option><option>Компютърни архитектури</option><option>Компютърни архитектури - учебна практика</option><option>Операционни системи</option><option>Операционни системи - учебна практика</option><option>ППС</option><option>ППС - учебна практика</option><option>Технология на програмирането</option><option>Технология на програмирането - учебна практика</option>ООП<option>ООП - учебна практика</option><option>СУБД</option>
-								</select>
-							</div>
-							
-							<center><input type="submit" class="btn btn-primary" value = "Публикувай" name="submit"/></center><br>
-						</form>
+							if ($connection->query($sql) === TRUE) {
+								
+							} else {
+								echo "Error creating table: " . $connection->error;
+							}
+
+							$connection->close();
+						}
+					 ?>
 				  </div>
 				</div>
 			    <!-- /.row -->
