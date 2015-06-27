@@ -262,16 +262,16 @@
 						function generate_step2() {
 							var div = document.getElementById('step1text');
 							div.innerHTML = '<font color="green">Стъпка 1. Изберете клас</font> <i class="fa fa-check fa-fw" style="color: green;">';
-						
+
 							var div = document.getElementById('step1');
-							div.innerHTML = '<br><div class="form-group"><div id="step2"><label><div id="step2text">Стъпка 2. Изберете предмет</div></label><select class="form-control" onchange="if (this.selectedIndex) generate_step3();"><option>Български език и литература</option><option>Математика</option><option>История</option><option>Английски език</option><option>Руск език</option><option>Физическа култура и спорт</option><option>Философия</option><option>Компютърни архитектури</option><option>Компютърни архитектури - учебна практика</option><option>Операционни системи</option><option>Операционни системи - учебна практика</option><option>ППС</option><option>ППС - учебна практика</option><option>Технология на програмирането</option><option>Технология на програмирането - учебна практика</option>ООП<option>ООП - учебна практика</option><option>СУБД</option></select></div></div>';
+							div.innerHTML = '<br><form action="" method="POST"><div class="form-group"><div id="step2"><label><div id="step2text">Стъпка 2. Изберете предмет</div></label><select class="form-control" onchange="if (this.selectedIndex) generate_step3();" name = "subject"><option>Български език и литература</option><option>Математика</option><option>История</option><option>Английски език</option><option>Руск език</option><option>Физическа култура и спорт</option><option>Философия</option><option>Компютърни архитектури</option><option>Компютърни архитектури - учебна практика</option><option>Операционни системи</option><option>Операционни системи - учебна практика</option><option>ППС</option><option>ППС - учебна практика</option><option>Технология на програмирането</option><option>Технология на програмирането - учебна практика</option>ООП<option>ООП - учебна практика</option><option>СУБД</option></select></div></div></form>';
 						}
 						
 						function generate_step3() {
 							var div = document.getElementById('step2text');
 							div.innerHTML = '<font color="green">Стъпка 2. Изберете предмет</font> <i class="fa fa-check fa-fw" style="color: green;">';
 							var div = document.getElementById('step3');
-							div.innerHTML = div.innerHTML + '<button type="button" onclick="show_table()" class="btn btn-success">Покажи</button>';
+							div.innerHTML = div.innerHTML + '<form action="" method="POST"><input type="submit" name="submit"  class="btn btn-success" value="Покажи"/></form>';
 						}
 					</script>
 					
@@ -286,57 +286,63 @@
 							$_SESSION['password'] == 'uchitel') {
 
 							
-								echo '	<form 
-										<div class="form-group">
-										<label><div id="step1text">Стъпка 1. Изберете клас</div></label>
-											<select class="form-control" onchange="generate_step2();">
-												<option>8А</option>
-												<option>8Б</option>
-												<option>8В</option>
-												<option>9А</option>
-												<option>9Б</option>
-												<option>9В</option>
-												<option>10А</option>
-												<option>10Б</option>
-												<option>10В</option>
-												<option>11А</option>
-												<option>11Б</option>
-												<option>11В</option>
-												<option>11Г</option>
-												<option>12А</option>
-												<option>12Б</option>
-												<option>12В</option>
-												<option>12Г</option>
-                                            </select>
-									  </div>
+								echo '	<form action="" method="POST">
+											<div class="form-group">
+											<label><div id="step1text">Стъпка 1. Изберете клас</div></label>
+												<select class="form-control" name = "classes" onchange="generate_step2();">
+													<option>8А</option>
+													<option>8Б</option>
+													<option>8В</option>
+													<option>9А</option>
+													<option>9Б</option>
+													<option>9В</option>
+													<option>10А</option>
+													<option>10Б</option>
+													<option>10В</option>
+													<option>11А</option>
+													<option>11Б</option>
+													<option>11В</option>
+													<option>11Г</option>
+													<option>12А</option>
+													<option>12Б</option>
+													<option>12В</option>
+													<option>12Г</option>
+												</select>
+											</div>
+										</form>
 									  
 									  <div id="step1"></div>
 									  <div id="step3"></div>';
-									  /* echo'<div class="dataTable_wrapper" id = "print">
-		                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-		                                    <thead>
-		                                        <tr>
-		                                        	<th>Номер</th>
-		                                            <th>Име</th>
-		                                            <th>Оценки</th>
-		                                            <th>Предмет</th>
-		                                        </tr>
-		                                    </thead>
-		                                    <tbody>';
-								while($row = mysql_fetch_array($result)){   
-									echo' 
-		                                        <tr class="odd gradeX">
-		                                            <td>2</td>
-		                                            <td>Internet Explorer 4.0</td>
-		                                            <td class="center">'.$row['ocenka'].'</td>
-		                                            <td>'.$row['predmet'].'</td>
-		                                        </tr>
-		                                       
-	                                ';
-							}
-							 echo'</tbody>
-		                                </table>
-	                               </div>'; */
+									  if(isset($_POST['submit'])) {
+										  $subject = $_POST['subject'];
+										  $classes = $_POST['classes'];
+										  echo $subject;
+										  echo $classes;
+										  echo'<div class="dataTable_wrapper" id = "print">
+											<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+												<thead>
+													<tr>
+														<th>Номер</th>
+														<th>Име</th>
+														<th>Оценки</th>
+														<th>Предмет</th>
+													</tr>
+												</thead>
+												<tbody>';
+												
+											while($row = mysql_fetch_array($result)){   
+												echo'
+															<tr class="odd gradeX">
+																<td>2</td>
+																<td>Internet Explorer 4.0</td>
+																<td class="center">'.$row['ocenka'].'</td>
+																<td>'.$row['predmet'].'</td>
+															</tr>
+														   
+												';
+											}
+											 echo'</tbody></table></div>';
+										}
 						}
 					?>
 				</div>

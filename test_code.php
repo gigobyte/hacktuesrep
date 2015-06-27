@@ -48,8 +48,7 @@ if(isset($_POST['submit'])) {
 		$pdf->write(5, $answer_option);
 		$pdf->write(5, "\n\n\n");
 	}
-	
-	ob_end_clean();
+	ob_clean();
 	$pdf->Output();
 }
 ?>
