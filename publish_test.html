@@ -257,8 +257,12 @@
                             <p>Избирайки кръгчето вляво от всеки отговор Вие маркирате този отговор за верен</p>
                         </div>
                     </div>
-						<form action="" method="POST">
+						<form action="send_test.html" method="POST">
 							<?php
+								$number_of_questions = $_POST['number_of_questions'];
+								$questionid = 1;
+								$option = 1;
+							
 								echo '<div class="panel panel-default">
 									<div class="panel-heading">
 										Изберете верните отговори
@@ -266,7 +270,16 @@
 									<div class="panel-body">
 									<div class="panel-group" id="accordion">';
 							
-								$number_of_questions = $_POST['number_of_questions'];
+								echo '<input type="hidden" name="noq" value="'. $number_of_questions . '">';
+							
+								for($i = 1; $i <= $number_of_questions; $i++) {
+									echo '<input type="hidden" name="question'. $questionid++ . '" value="'. $_POST[$i] . '">';
+									echo '<input type="hidden" name="qoption'. $option++ . '" value="'. $_POST[$i . "_1"] . '">';
+									echo '<input type="hidden" name="qoption'. $option++ . '" value="'. $_POST[$i . "_2"] . '">';
+									echo '<input type="hidden" name="qoption'. $option++ . '" value="'. $_POST[$i . "_3"] . '">';
+									echo '<input type="hidden" name="qoption'. $option++ . '" value="'. $_POST[$i . "_4"] . '">';
+								}
+								
 								$collapseid = 1;
 								$option = 1;
 								
@@ -300,7 +313,7 @@
 														</div>
 														<div class="radio">
 															<label>
-																<input type="radio" name="optionsRadios' . $collapseid . '" id="optionsRadios' . $collapseid . '" value="option' . $option++ . '" checked>'
+																<input type="radio" name="optionsRadios' . $collapseid . '" id="optionsRadios' . $collapseid++ . '" value="option' . $option++ . '" checked>'
 																. $_POST[$i . "_4"]. '
 															</label>
 														</div>
