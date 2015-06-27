@@ -33,7 +33,7 @@
 
 <body>
 	<div id="wrapper">
-	<?php session_start(); ?>
+	<?php session_start();?>
 	
         <!-- Navigation -->
 	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -214,7 +214,7 @@
 							echo '<li>
 								<a href="#"><i class="fa fa-book fa-fw"></i> Дневник<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
-<li>
+									<li>
 										<a href="dnevnik_marks.html">Оценки</a>
 									</li>
 									<li>
@@ -225,7 +225,7 @@
 							if($_SESSION['username'] == 'uchitel' &&
 								$_SESSION['password'] == 'uchitel') {
 									echo '<li>
-											<a href="testove.html"><i class="fa fa-edit fa-fw"></i> Тестове</a>
+											<a href="index.html"><i class="fa fa-edit fa-fw"></i> Тестове</a>
 											</li>';
 							}
 								
@@ -245,63 +245,68 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<?php
-							if(isset($_SESSION['username'])) {
-								$username = $_SESSION['username'];
-								
-
-								$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
-								$select_db = mysql_select_db('users');
-								mysql_query("set names 'utf8'");
-								$query = "SELECT name,lastname FROM `members` WHERE username='$username'";
-								$result = mysql_query($query) or die(mysql_error());
-								$info = mysql_fetch_row($result);
-
-								echo '<h1 class="page-header">Добре дошли, ' . $info[0] . ' ' . $info[1]. '!</h1>';
-							} else {
-								echo '<h1 class="page-header">Добре дошли!';
-							}
-						?>
+						<h1 class="page-header">Оценки</h1>
 					</div>
-				</div>
-				  
-				<?php
-					include('php/parse_elsys.php');
-
-					$news = get_news();
 					
-					echo '<div class="row">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<i class="fa fa-bell fa-fw"></i> Съобщения
-								</div>
+					<?php include('test_code.php') ?>
 
-								<div class="panel-body">
-									<div class="list-group">';
-										foreach($news as $new) {
-											show_message($new[1], $new[0]);
-										}
-									echo '</div>
-								</div>
-							</div></div>'. "\n\n\t\t\t\t";
-							
-					$posts = get_blog();
-							
-					echo '<div class="row">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<i class="fa fa-bell fa-fw"></i> Блог
-								</div>
+					<form action="" method="POST">
+					<div id = "form">
+					</div>
+					<button type="button" onclick="generate()" class="btn btn-primary">Добавете въпрос</button>
+					<input type="submit" class="btn btn-outline btn-primary btn-lg btn-block" value = "Създай документ" name="submit"/>
+					<input type= "text" name="number_of_questions"  id="number_of_questions" value="1" style = "display:none;"/>
+					<br>
+					</form>
 
-								<div class="panel-body">
-									<div class="list-group">';
-										foreach($posts as $post) {
-											show_message($post[1], $post[0]);
-										}
-									echo '</div>
-								</div>
-							</div>';	
-				?>
+					<script>
+						var n = 0;
+						function generate() {
+							n++;
+							document.getElementById("number_of_questions").value = n;
+							var delimiter = document.createElement("br");
+							document.getElementById("form").appendChild(delimiter);
+							document.getElementById("form").appendChild(delimiter);
+							for(var i = 0;i < 5;++i) {
+								var wraper = document.createElement("div");
+								var value = document.createElement("span");
+								var element = document.createElement("input");
+								element.type = "text";
+								element.setAttribute("class", "form-control");
+								value.setAttribute("class", "input-group-addon");
+								wraper.setAttribute("class", "form-group input-group");
+								if(i > 0) {
+									element.name = n + '_' + i;
+								} else {
+									element.name = n;
+								}
+								var id = wraper.id = element.name;
+								switch(i) {
+									case 0:
+										value.innerHTML = n;
+										break;
+									case 1:
+										value.innerHTML = "а";
+										break;
+									case 2:
+										value.innerHTML = "б";
+										break;
+									case 3:
+										value.innerHTML = "в";
+										break;
+									case 4:
+										value.innerHTML = "г";
+										break;
+								}
+								document.getElementById("form").appendChild(wraper);
+								document.getElementById(id).appendChild(value);
+								document.getElementById(id).appendChild(element);
+							}
+							document.getElementById("form").appendChild(delimiter);
+							document.getElementById("form").appendChild(delimiter);
+						}
+					</script>
+
 				  <!-- /.col-lg-12 -->
 				</div>
 			    <!-- /.row -->
