@@ -1,6 +1,7 @@
 <?php	
 
 if(isset($_POST['submit'])) {
+	session_start();
 	// Connect to server and select databse.
 	$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 
