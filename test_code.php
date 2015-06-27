@@ -2,7 +2,6 @@
 if(isset($_POST['submit'])) {
 	$number_of_questions = $_POST['number_of_questions'];
 	
-	
 	require('tfpdf.php');
 
 	$pdf = new tFPDF();
@@ -48,6 +47,7 @@ if(isset($_POST['submit'])) {
 		$pdf->write(5, $answer_option);
 		$pdf->write(5, "\n\n\n");
 	}
+
 	ob_clean();
 	$pdf->Output();
 }
