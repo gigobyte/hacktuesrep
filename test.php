@@ -21,7 +21,7 @@
 		<button type="button" onclick="generate()" class="btn btn-primary">Добавете въпрос</button>
 		<div id = "form">
 		</div>
-		<button type="submit" class="btn btn-outline btn-primary btn-lg btn-block">Създай документ</button>
+		<input type="submit" class="btn btn-outline btn-primary btn-lg btn-block" value = "Създай документ" name="submit"/>
 		<input type= "text" name="number_of_questions"  id="number_of_questions" value="1" style = "display:none;"/>
 		<br>
 	</form>
