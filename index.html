@@ -49,6 +49,8 @@
 		<!-- /.navbar-header -->
 
 		<?php
+			include('php/get_tests.php');
+		
 			if(isset($_SESSION['username'])) {
 				echo '<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown">
@@ -60,44 +62,15 @@
 							<a href="#">
 								<div>
 									<strong>John Smith</strong>
-									<span class="pull-right text-muted">
-										<em>Yesterday</em>
-									</span>
 								</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+								<div>';
+								foreach(get_tests() as $test) {
+									echo $test;
+								}
+								echo '</div>
 							</a>
 						</li>
 						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<strong>John Smith</strong>
-									<span class="pull-right text-muted">
-										<em>Yesterday</em>
-									</span>
-									</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-							</a>
-						</li>
-						<li class="divider"></li>
-						<li>
-							<a href="#">
-								<div>
-									<strong>John Smith</strong>
-									<span class="pull-right text-muted">
-										<em>Yesterday</em>
-									</span>
-								</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-							</a>
-						</li>
-								<li class="divider"></li>
-								<li>
-									<a class="text-center" href="#">
-										<strong>Read All Messages</strong>
-										<i class="fa fa-angle-right"></i>
-									</a>
-								</li>
 							</ul>
 							<!-- /.dropdown-messages -->
 						</li>
