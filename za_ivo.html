@@ -48,22 +48,21 @@
 			var id = wraper.id = element.name;
 			switch(i) {
 				case 0:
-					element.placeholder = n;
+					value.innerHTML = n;
 					break;
 				case 1:
-					element.placeholder = "а";
+					value.innerHTML = "а";
 					break;
 				case 2:
-					element.placeholder = "б";
+					value.innerHTML = "б";
 					break;
 				case 3:
-					element.placeholder = "в";
+					value.innerHTML = "в";
 					break;
 				case 4:
-					element.placeholder = "г";
+					value.innerHTML = "г";
 					break;
 			}
-			value.innerHTML = element.placeholder;
 			document.getElementById("form").appendChild(wraper);
 			document.getElementById(id).appendChild(value);
 			document.getElementById(id).appendChild(element);
