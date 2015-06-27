@@ -247,7 +247,7 @@
 					<div class="col-lg-12">
 						<h1 class="page-header">Оценки</h1>
 					</div>
-					
+					<form action="" method="POST">
 					<script type="text/javascript">
 						function show_table() {
 							var xmlhttp = new XMLHttpRequest();
@@ -264,32 +264,28 @@
 							div.innerHTML = '<font color="green">Стъпка 1. Изберете клас</font> <i class="fa fa-check fa-fw" style="color: green;">';
 
 							var div = document.getElementById('step1');
-							div.innerHTML = '<br><form action="" method="POST"><div class="form-group"><div id="step2"><label><div id="step2text">Стъпка 2. Изберете предмет</div></label><select class="form-control" onchange="if (this.selectedIndex) generate_step3();" name = "subject"><option>Български език и литература</option><option>Математика</option><option>История</option><option>Английски език</option><option>Руск език</option><option>Физическа култура и спорт</option><option>Философия</option><option>Компютърни архитектури</option><option>Компютърни архитектури - учебна практика</option><option>Операционни системи</option><option>Операционни системи - учебна практика</option><option>ППС</option><option>ППС - учебна практика</option><option>Технология на програмирането</option><option>Технология на програмирането - учебна практика</option>ООП<option>ООП - учебна практика</option><option>СУБД</option></select></div></div></form>';
+							div.innerHTML = '<br><div class="form-group"><div id="step2"><label><div id="step2text">Стъпка 2. Изберете предмет</div></label><select class="form-control" onchange="if (this.selectedIndex) generate_step3();" name = "subject"><option>Български език и литература</option><option>Математика</option><option>История</option><option>Английски език</option><option>Руски език</option><option>Физическа култура и спорт</option><option>Философия</option><option>Компютърни архитектури</option><option>Компютърни архитектури - учебна практика</option><option>Операционни системи</option><option>Операционни системи - учебна практика</option><option>ППС</option><option>ППС - учебна практика</option><option>Технология на програмирането</option><option>Технология на програмирането - учебна практика</option>ООП<option>ООП - учебна практика</option><option>СУБД</option></select></div></div>';
 						}
 						
 						function generate_step3() {
 							var div = document.getElementById('step2text');
 							div.innerHTML = '<font color="green">Стъпка 2. Изберете предмет</font> <i class="fa fa-check fa-fw" style="color: green;">';
 							var div = document.getElementById('step3');
-							div.innerHTML = div.innerHTML + '<form action="" method="POST"><input type="submit" name="submit"  class="btn btn-success" value="Покажи"/></form>';
+							div.innerHTML = div.innerHTML + '<input type="submit" name="submit"  class="btn btn-success" value="Покажи"/>';
 						}
 					</script>
 					
 					<?php
-						$i = 0;
-						mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
-						mysql_select_db('users');
-						$query = "SELECT * FROM marks";
-						$result = mysql_query($query);
+						
 
 						if($_SESSION['username'] == 'uchitel' &&
 							$_SESSION['password'] == 'uchitel') {
 
 							
-								echo '	<form action="" method="POST">
+								echo '	
 											<div class="form-group">
 											<label><div id="step1text">Стъпка 1. Изберете клас</div></label>
-												<select class="form-control" name = "classes" onchange="generate_step2();">
+												<select class="form-control" name= "classes" onchange="generate_step2();">
 													<option>8А</option>
 													<option>8Б</option>
 													<option>8В</option>
@@ -309,15 +305,24 @@
 													<option>12Г</option>
 												</select>
 											</div>
-										</form>
+										
 									  
 									  <div id="step1"></div>
 									  <div id="step3"></div>';
 									  if(isset($_POST['submit'])) {
 										  $subject = $_POST['subject'];
 										  $classes = $_POST['classes'];
-										  echo $subject;
-										  echo $classes;
+
+										  $i = 0;
+										  mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
+										  mysql_select_db('users');
+										  $query = "SELECT * FROM `marks` WHERE `predmet` = '$subject'";
+										  $result = mysql_query($query);
+										  var_dump($query);
+										  echo $result;
+										  $row2 = mysql_fetch_array($result);
+										  echo $row2['ocenka'];
+
 										  echo'<div class="dataTable_wrapper" id = "print">
 											<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 												<thead>
@@ -334,7 +339,7 @@
 												echo'
 															<tr class="odd gradeX">
 																<td>2</td>
-																<td>Internet Explorer 4.0</td>
+																<td>'.$row['ocenka'].'</td>
 																<td class="center">'.$row['ocenka'].'</td>
 																<td>'.$row['predmet'].'</td>
 															</tr>
@@ -348,6 +353,7 @@
 				</div>
 
 				  <!-- /.col-lg-12 -->
+				  </form>
 				</div>
 			    <!-- /.row -->
 			</div>
