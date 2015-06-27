@@ -5,6 +5,7 @@
 <body>
 	
 	<form action="" method="POST">
+		<input type = "button" onclick = "generate()"/><br>
 		<input type="text" name="1" value="Whatever"/><br>
 		<input type="text" name="1_1" value="a"/>
 		<input type="text" name="1_2" value="b"/>
@@ -28,3 +29,41 @@
 </body>
 </html>
 
+<script>
+	var n = 1;
+	function generate() {
+		n++;
+		for(var i = 0;i < 5;++i) {
+			var element = document.createElement("input");
+			element.type = "text";
+			if(i > 0) {
+				element.name = n + '_' + i;
+			} else 
+				element.name = n;
+			}
+			switch(i) {
+				case 0:
+					element.value = "Whatever";
+					break;
+				case 1:
+					element.value = "a";
+					break;
+				case 2:
+					element.value = "b";
+					break;
+				case 3:
+					element.value = "c";
+					break;
+				case 4:
+					element.value = "d";
+					break;
+			}
+			document.getElementById("form").appendChild(element);
+		}
+	}
+
+
+
+
+
+</script>
