@@ -1,6 +1,6 @@
 <?php
 	if(isset($_POST['submit'])) {
-		include_once "../mysql_connect.php";
+		include_once "mysql_connect.php";
 
 		$name =  $_POST['name'];
 		$middlename = $_POST['middlename'];
@@ -39,7 +39,7 @@
 			mysql_query("INSERT INTO members (name, middlename, lastname, class, classnum, username, password, email )
 			VALUES ('$name', '$middlename', '$lastname', '$class', '$classnum', '$username', '$password', '$email')") or die(mysql_error());
 		} elseif ($repeat_password != $password) {
-			echo "<script type='text/javascript'>alert('Грещна Парола!');</script>";
+			echo "<script type='text/javascript'>alert('Грешна Парола!');</script>";
 		}
 		
 	}
