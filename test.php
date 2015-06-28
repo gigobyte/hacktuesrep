@@ -28,7 +28,6 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-
 </head>
 
 <body>
@@ -49,6 +48,8 @@
 		<!-- /.navbar-header -->
 
 		<?php
+			include('php/get_tests.php');
+		
 			if(isset($_SESSION['username'])) {
 				echo '<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown">
@@ -143,45 +144,32 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-					 <?php
-						if(isset($_POST['submit'])) {
-							$number_of_questions = $_POST['noq'];
+						<div class="col-lg-12">
+							<h1 class="page-header">Тест</h1>
+						</div>
 						
-							$count = 0;
-							$files = glob('json/*.json');
-							//Counts the number of tests in the database
-							foreach($files as $file)
-							{
-								$count++;
+						<?php
+							$id = $_GET['id'];
+							$q = 1;
+							$options = 1;
+							
+							$json = json_decode(file_get_contents('json/'. $test . '.json'), true);
+							
+							foreach($json as $key => $val) {
+								if(is_array($val)) {
+									echo '<h3><b>'. $q++ . '. ' . $key. '</h3>';
+									foreach($val as $v) {
+										echo '<div class="radio">
+													<label>
+														<input type="radio" name="optionsRadios" id="optionsRadios'. $options . '" value="option'. $options++ . '" checked>'. $v . '
+													</label>
+												</div>';
+									}
+								}
 							}
-							
-							$arr = array("0", "0", "0", "0", "0");
-							//Counts the digits in $count, which is the number of tests
-							$count_digits = preg_match_all( "/[0-9]/", strval($count) );
-							//Cuts digits from 00000 equal to the digits in the post counter
-							$arr = array_slice($arr, $count_digits);
-							//Adds the post counter at the end of $arr
-							$filename = implode("", $arr) . $count;
-							$filename = 'json/' . $filename . '.json';
-							
-							$data = array();
-							$answers = 1;
-							
-							$data["class"] = $_POST['class'];
-							$data["subject"] = $_POST['subject'];
-							
-							for ($i = 1; $i <= $number_of_questions; $i++, $answers) {
-								$qoptions = array();
-								array_push($qoptions, $_POST['qoption'.$answers++]);
-								array_push($qoptions, $_POST['qoption'.$answers++]);
-								array_push($qoptions, $_POST['qoption'.$answers++]);
-								array_push($qoptions, $_POST['qoption'.$answers++]);
-								$data[$_POST['question'.$i]] = $qoptions;
-							}
-		
-							file_put_contents($filename, json_encode($data));
-						}
-					 ?>
+						?>
+						
+						<br><button type="button" class="btn btn-success">Предай</button>
 				  </div>
 				</div>
 			    <!-- /.row -->
