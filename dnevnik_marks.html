@@ -71,7 +71,9 @@
 										<div>';
 								}
 						
-						echo '</a></li>';
+						echo '</div>
+							</a>
+						</li>';
 						
 						if($test_count > 1) {
 							echo '<li class="divider"></li>';
@@ -210,14 +212,15 @@
 									  if(isset($_POST['submit'])) {
 										  $subject = $_POST['subject'];
 										  $classes = $_POST['classes'];
+										  echo $subject;
 
 										  $i = 0;
 										  mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 										  mysql_select_db('users');
-										  $query = "SELECT * FROM `marks` WHERE `predmet` = '$subject'";
-										  $result = mysql_query($query);
+										  $query = "SELECT * FROM marks, members WHERE `predmet` = '$subject' AND `class` = '$classes' ";
+										  $result = mysql_query($query) or die(mysql_error()) ;
 										  var_dump($query);
-										  echo $result;
+										  echo gettype($result);
 										  $row2 = mysql_fetch_array($result);
 										  echo $row2['ocenka'];
 
@@ -236,8 +239,8 @@
 											while($row = mysql_fetch_array($result)){   
 												echo'
 															<tr class="odd gradeX">
-																<td>2</td>
-																<td>'.$row['ocenka'].'</td>
+																<td>'.$row['classnum'].'</td>
+																<td>'.$row['name'].'</td>
 																<td class="center">'.$row['ocenka'].'</td>
 																<td>'.$row['predmet'].'</td>
 															</tr>
