@@ -60,7 +60,7 @@
 					<ul class="dropdown-menu dropdown-messages">';
 								$test_count = count(get_tests());
 								$test_shown = 1;
-
+								
 								foreach(get_tests() as $test) {
 									echo '<li>';
 									$json = json_decode(file_get_contents('json/'. $test . '.json'), true);
@@ -68,7 +68,7 @@
 									echo '<a href="'. $link .'">
 											<div>
 												<strong>Тест по '.$json['subject'].'</strong>
-											</div>
+											</div></a>
 										<div>';
 
 									if($test_count != $test_shown++) {

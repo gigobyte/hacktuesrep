@@ -149,9 +149,42 @@ if(isset($_SESSION['username'])) {
 					 <?php
 						if(isset($_POST['submit'])) {
 							$test_id = $_POST['test_id'];
+							$number_of_questions = $_POST['noq'];
+							$correct = 0;
+							$all = 0;
 							
 							$file = json_decode(file_get_contents('json/'. $test_id . '.json'), true);
-							print_r($file['right_answers']);
+							
+							for($i = 0; $i < $number_of_questions-1; $i++) {
+								if($file['right_answers'][$i] == $_POST['optionsRadios'. ($i+1)]) {
+									$correct++;
+								}
+								
+								$all++;
+							}
+							
+							if($correct <= ($all/2))
+								echo '<center><font color="#D9534F"><h1>'. $correct .'/'. $all .' верни отговори</h1></font></center>';
+							else
+								echo '<center><font color="#5CB85C"><h1>'. $correct .'/'. $all .' верни отговори</h1></font></center>';
+							
+							$to      = 'gigobest2@gmail.com';
+							$subject = 'Оценка на тест';
+							$username = $_SESSION['username'];
+							
+							$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
+							$select_db = mysql_select_db('users');
+							mysql_query("set names 'utf8'");
+							$query = "SELECT name,middlename,lastname,class,classnum FROM `members` WHERE username='$username'";
+							$result = mysql_query($query) or die(mysql_error());
+							$info = mysql_fetch_row($result);
+							
+							$message = 'Ученик '. $info[0] . ' '. $info[1] . ' ' . $info[2] . ' ' . 'от клас ' . $info[3] . ', номер ' . $info[4] . 'е получил' . $correct .'/'. $all . 'на тест';
+							$headers = 'From: webmaster@example.com' . "\r\n" .
+										'Reply-To: webmaster@example.com' . "\r\n" .
+										'X-Mailer: PHP/' . phpversion();
+							
+							mail($to, $subject, $message, $headers);
 						}
 					 ?>
 				  </div>

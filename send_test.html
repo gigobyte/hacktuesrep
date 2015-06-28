@@ -182,9 +182,12 @@ if(isset($_SESSION['username'])) {
 								$data[$_POST['question'.$i]] = $qoptions;
 							}
 							
+							$ranswers = array();
+							
 							for ($i = 1; $i <= $number_of_questions; $i++) {
-								$data["right_answers"] =  $_POST['optionsRadios'. $i];
+								array_push($ranswers, $_POST['optionsRadios'. $i]);
 							}
+							$data["right_answers"] =  $ranswers;
 		
 							file_put_contents($filename, json_encode($data));
 							

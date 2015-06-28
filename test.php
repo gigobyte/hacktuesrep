@@ -153,26 +153,32 @@ if(isset($_SESSION['username'])) {
 							$id = $_GET['id'];
 							$q = 1;
 							$options = 1;
+							$chosen_options = 1;
 							$answers = 1;
 							
-							$json = json_decode(file_get_contents('json/'. $test . '.json'), true);
+							$json = json_decode(file_get_contents('json/'. $id . '.json'), true);
 							
 							echo '<form action="evaluate_test.html" method="POST">';
 							echo '<input type="hidden" name="test_id" value="'. $id . '">';
 
 							foreach($json as $key => $val) {
-								if(is_array($val)) {
+								if(is_array($val) && $key != "right_answers") {
 									echo '<h3><b>'. $q++ . '. ' . $key. '</h3>';
 
 									foreach($val as $v) {
 										echo '<div class="radio">
 													<label>
-														<input type="radio" name="optionsRadios" id="optionsRadios'. $options . '" value="option'. $options++ . '" checked>'. $v . '
+														<input type="radio" name="optionsRadios'. $options . '" id="optionsRadios'. $options . '" value="option'. $chosen_options++ . '" checked>'. $v . '
 													</label>
 												</div>';
 									}
+									
+									$options++;
+									$chosen_options = 1;
 								}
 							}
+							echo '<input type="hidden" name="noq" value="'. $q . '">';
+							
 							echo '<br><input type="submit" class="btn btn-success" value = "Изпрати" name="submit"/>';
 							echo '</form>';
 						?>
