@@ -212,17 +212,17 @@
 									  if(isset($_POST['submit'])) {
 										  $subject = $_POST['subject'];
 										  $classes = $_POST['classes'];
-										  echo $subject;
 
 										  $i = 0;
 										  mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 										  mysql_select_db('users');
-										  $query = "SELECT * FROM marks, members WHERE `predmet` = '$subject' AND `class` = '$classes' ";
+										  mysql_query("set names 'utf8'");
+										  $query = "SELECT * FROM marks,members WHERE `predmet` = '$subject'";
+
 										  $result = mysql_query($query) or die(mysql_error()) ;
 										  var_dump($query);
 										  echo gettype($result);
-										  $row2 = mysql_fetch_array($result);
-										  echo $row2['ocenka'];
+
 
 										  echo'<div class="dataTable_wrapper" id = "print">
 											<table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -236,16 +236,15 @@
 												</thead>
 												<tbody>';
 												
-											while($row = mysql_fetch_array($result)){   
-												echo'
-															<tr class="odd gradeX">
+											while($row = mysql_fetch_array($result)){
+												if(($row['class'] == $classes) && ($row['ID'] == $row['student_id'])) {
+													echo'<tr class="odd gradeX">
 																<td>'.$row['classnum'].'</td>
 																<td>'.$row['name'].'</td>
 																<td class="center">'.$row['ocenka'].'</td>
 																<td>'.$row['predmet'].'</td>
-															</tr>
-														   
-												';
+															</tr>';}
+												
 											}
 											 echo'</tbody></table></div>';
 										}
