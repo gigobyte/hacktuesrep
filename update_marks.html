@@ -174,84 +174,12 @@
 					</script>
 					
 					<?php
-						
-
-						if($_SESSION['username'] == 'uchitel' &&
-							$_SESSION['password'] == 'uchitel') {
-
-							
-								echo '	
-											<div class="form-group">
-											<label><div id="step1text">Стъпка 1. Изберете клас</div></label>
-												<select class="form-control" name= "classes" onchange="generate_step2();">
-													<option>8А</option>
-													<option>8Б</option>
-													<option>8В</option>
-													<option>9А</option>
-													<option>9Б</option>
-													<option>9В</option>
-													<option>10А</option>
-													<option>10Б</option>
-													<option>10В</option>
-													<option>11А</option>
-													<option>11Б</option>
-													<option>11В</option>
-													<option>11Г</option>
-													<option>12А</option>
-													<option>12Б</option>
-													<option>12В</option>
-													<option>12Г</option>
-												</select>
-											</div>
-										
-									  
-									  <div id="step1"></div>
-									  <div id="step3"></div>';
-									  if(isset($_POST['submit'])) {
-										  $subject = $_POST['subject'];
-										  $classes = $_POST['classes'];
-
-										  $i = 0;
-										  mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
-										  mysql_select_db('users');
-										  mysql_query("set names 'utf8'");
-										  $query = "SELECT * FROM marks,members WHERE `predmet` = '$subject'";
-
-										  $result = mysql_query($query) or die(mysql_error()) ;
-										  echo '</form>';
-										  echo '<br><form action="update_marks.html" method="POST">';
-										  echo'<div class="dataTable_wrapper" id = "print">
-											<table class="table table-striped table-bordered table-hover" id="dataTables-example">
-												<thead>
-													<tr>
-														<th>Номер</th>
-														<th>Име</th>
-														<th>Оценки</th>
-														<th>Предмет</th>
-													</tr>
-												</thead>
-												<tbody>';
-
-											$student = 1;
-											
-											while($row = mysql_fetch_array($result)){
-												if(($row['class'] == $classes) && ($row['ID'] == $row['student_id'])) {
-													echo '<input type="hidden" name="st_id'. $student .'" value="'. $row['student_id'] . '">';
-													echo'<tr name="row"class="odd gradeX">
-																<td>'.$row['classnum'].'</td>
-																<td>'.$row['name'].'</td>
-																<td class="center"><input type="text" name="student'.$student++.'" value="'.$row['ocenka'].'"/></td>
-																<td>'.$row['predmet'].'</td>
-															</tr>';}
-												
-											}
-											 echo'</tbody></table>';
-											 echo '<center><input type="submit" class="btn btn-primary" value = "Обнови" name="submit"/></center><br>';
-											 echo '</form>';
-										}
-						}
+						print_r($_POST);
 					?>
 				</div>
+
+				  <!-- /.col-lg-12 -->
+				  </form>
 				</div>
 			    <!-- /.row -->
 			</div>
