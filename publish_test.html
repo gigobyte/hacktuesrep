@@ -59,25 +59,38 @@
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							<i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
 						</a>
-					<ul class="dropdown-menu dropdown-messages">
-						<li>';
+					<ul class="dropdown-menu dropdown-messages">';
 								$test_count = count(get_tests());
-						
+								$test_shown = 1;
+								$username = $_SESSION['username'];
+								
 								foreach(get_tests() as $test) {
 									$json = json_decode(file_get_contents('json/'. $test . '.json'), true);
-									$link = "test.php?id=" . $test;
-									echo '<a href="'. $link .'">
-											<div>
-												<strong>Тест по '.$json['subject'].'</strong>
-											</div>
-										<div>';
+									$connection = mysql_connect("localhost", "root", "lorempass") or die("cannot connect"); 
+									$select_db = mysql_select_db('users');
+									mysql_query("set names 'utf8'");
+									$query = "SELECT id FROM `members` WHERE username='$username'";
+									$result = mysql_query($query) or die(mysql_error());
+									$info = mysql_fetch_row($result);
+							
+									if(!in_array($info[0], $json['seen_by'])) {
+										echo '<li>';
+										$link = "test.php?id=" . $test;
+										echo '<a href="'. $link .'">
+												<div>
+													<strong>Тест по '.$json['subject'].'</strong>
+												</div></a>
+											<div>';
+
+										if($test_count != $test_shown++) {
+											echo '<li class="divider"></li>';
+										}
+
+										echo '</li>';
+									}
 								}
-						
+
 						echo '</a></li>';
-						
-						if($test_count > 1) {
-							echo '<li class="divider"></li>';
-						}
 						
 						echo '</ul>
 							<!-- /.dropdown-messages -->
