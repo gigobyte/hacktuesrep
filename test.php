@@ -153,12 +153,17 @@ if(isset($_SESSION['username'])) {
 							$id = $_GET['id'];
 							$q = 1;
 							$options = 1;
+							$answers = 1;
 							
 							$json = json_decode(file_get_contents('json/'. $test . '.json'), true);
 							
+							echo '<form action="evaluate_test.html" method="POST">';
+							echo '<input type="hidden" name="test_id" value="'. $id . '">';
+
 							foreach($json as $key => $val) {
 								if(is_array($val)) {
 									echo '<h3><b>'. $q++ . '. ' . $key. '</h3>';
+
 									foreach($val as $v) {
 										echo '<div class="radio">
 													<label>
@@ -168,9 +173,10 @@ if(isset($_SESSION['username'])) {
 									}
 								}
 							}
+							echo '<br><input type="submit" class="btn btn-success" value = "Изпрати" name="submit"/>';
+							echo '</form>';
 						?>
 						
-						<br><button type="button" class="btn btn-success">Предай</button>
 				  </div>
 				</div>
 			    <!-- /.row -->

@@ -173,13 +173,17 @@ if(isset($_SESSION['username'])) {
 							$data["class"] = $_POST['class'];
 							$data["subject"] = $_POST['subject'];
 							
-							for ($i = 1; $i <= $number_of_questions; $i++, $answers) {
+							for ($i = 1; $i <= $number_of_questions; $i++) {
 								$qoptions = array();
 								array_push($qoptions, $_POST['qoption'.$answers++]);
 								array_push($qoptions, $_POST['qoption'.$answers++]);
 								array_push($qoptions, $_POST['qoption'.$answers++]);
 								array_push($qoptions, $_POST['qoption'.$answers++]);
 								$data[$_POST['question'.$i]] = $qoptions;
+							}
+							
+							for ($i = 1; $i <= $number_of_questions; $i++) {
+								$data["right_answers"] =  $_POST['optionsRadios'. $i];
 							}
 		
 							file_put_contents($filename, json_encode($data));
