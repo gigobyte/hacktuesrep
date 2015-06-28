@@ -36,11 +36,23 @@
 			
 
 		if ($password2 == $password) {
+			$subjects = array('Руски език', 'Български език и литература', 'Математика', 'История','Английски език', 'Физическа култура и спорт',
+			'Философия', 'Компютърни архитектури', 'Компютърни архитектури - учебна практика', 'Операционни системи', 'Операционни системи - учебна практика',
+			'ППС', 'ППС - учебна практика', 'Технология на програмирането', 'Технология на програмирането - учебна практика', 'ООП', 'ООП - учебна практика',
+			'СУБД');
 			$query = "INSERT INTO members (name, middlename, lastname, class, classnum, username, password, email )
 			VALUES ('$name', '$middlename', '$lastname', '$class', '$classnum', '$username', '$password', '$email')";
 			mysql_query($query) or die(mysql_error());
+			$query = "SELECT ID FROM members ORDER BY ID DESC LIMIT 1";
+			$result = mysql_query($query) or die(mysql_error());
+			$row = mysql_fetch_array($result);
+			$id = $row['ID'];
+			foreach ($subjects as &$subject) {
+   				$query = "INSERT INTO marks (predmet, ocenka, student_id) VALUES ('$subject', '0', '$id')";
+				mysql_query($query) or die(mysql_error());
+			}
 			header('Location: index.html');
-		} elseif ($repeat_password != $password) {
+		} elseif ($password2 != $password) {
 			echo "<script type='text/javascript'>alert('Грешна Парола!');</script>";
 		}
 		
