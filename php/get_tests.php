@@ -1,6 +1,6 @@
 <?php
 	function get_user_class() {
-		$username = $_SESSION['username'];				
+		$username = $_SESSION['username'];
 
 		$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 		$select_db = mysql_select_db('users');
@@ -17,6 +17,7 @@
 	
 		$class = get_user_class();
 		$files = glob('json/*.json');
+
 		foreach($files as $file) {
 			//json/00000.json
 			$testname = explode("/", $file)[1];

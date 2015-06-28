@@ -51,17 +51,18 @@
 		<?php
 			include('php/get_tests.php');
 		
-			if(isset($_SESSION['username'])) {
+if(isset($_SESSION['username'])) {
 				echo '<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							<i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
 						</a>
-					<ul class="dropdown-menu dropdown-messages">
-						<li>';
+					<ul class="dropdown-menu dropdown-messages">';
 								$test_count = count(get_tests());
-						
+								$test_shown = 1;
+
 								foreach(get_tests() as $test) {
+									echo '<li>';
 									$json = json_decode(file_get_contents('json/'. $test . '.json'), true);
 									$link = "test.php?id=" . $test;
 									echo '<a href="'. $link .'">
@@ -69,13 +70,15 @@
 												<strong>Тест по '.$json['subject'].'</strong>
 											</div>
 										<div>';
+										
+									if($test_count != $test_shown++) {
+										echo '<li class="divider"></li>';
+									}
+									
+									echo '</li>';
 								}
 						
 						echo '</a></li>';
-						
-						if($test_count > 1) {
-							echo '<li class="divider"></li>';
-						}
 						
 						echo '</ul>
 							<!-- /.dropdown-messages -->
