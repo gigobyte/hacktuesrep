@@ -188,6 +188,7 @@ if(isset($_SESSION['username'])) {
 								array_push($ranswers, $_POST['optionsRadios'. $i]);
 							}
 							$data["right_answers"] =  $ranswers;
+							$data["seen_by"] = array();
 		
 							file_put_contents($filename, json_encode($data));
 							

@@ -171,11 +171,12 @@ if(isset($_SESSION['username'])) {
 							$to      = 'gigobest2@gmail.com';
 							$subject = 'Оценка на тест';
 							$username = $_SESSION['username'];
+							$file["seen_by"] = array();
 							
 							$connection = mysql_connect("localhost", "root", "lorempass")or die("cannot connect"); 
 							$select_db = mysql_select_db('users');
 							mysql_query("set names 'utf8'");
-							$query = "SELECT name,middlename,lastname,class,classnum FROM `members` WHERE username='$username'";
+							$query = "SELECT name,middlename,lastname,class,classnum,id FROM `members` WHERE username='$username'";
 							$result = mysql_query($query) or die(mysql_error());
 							$info = mysql_fetch_row($result);
 							
@@ -185,6 +186,9 @@ if(isset($_SESSION['username'])) {
 										'X-Mailer: PHP/' . phpversion();
 							
 							mail($to, $subject, $message, $headers);
+							
+							array_push($file["seen_by"], $info[5]);
+							file_put_contents('json/'. $test_id . '.json', json_encode($file));
 						}
 					 ?>
 				  </div>

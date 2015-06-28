@@ -50,7 +50,7 @@
 		<?php
 			include('php/get_tests.php');
 		
-if(isset($_SESSION['username'])) {
+			if(isset($_SESSION['username'])) {
 				echo '<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -155,32 +155,43 @@ if(isset($_SESSION['username'])) {
 							$options = 1;
 							$chosen_options = 1;
 							$answers = 1;
+							$username = $_SESSION['username'];
 							
 							$json = json_decode(file_get_contents('json/'. $id . '.json'), true);
+							$connection = mysql_connect("localhost", "root", "lorempass") or die("cannot connect"); 
+							$select_db = mysql_select_db('users');
+							mysql_query("set names 'utf8'");
+							$query = "SELECT id FROM `members` WHERE username='$username'";
+							$result = mysql_query($query) or die(mysql_error());
+							$info = mysql_fetch_row($result);							
 							
-							echo '<form action="evaluate_test.html" method="POST">';
-							echo '<input type="hidden" name="test_id" value="'. $id . '">';
+							if(in_array($info[0], $json['seen_by'])) {
+								echo '<font color="#D9534F"><h1>Вече сте попълнили този тест!</h1></font>';
+							} else {
+								echo '<form action="evaluate_test.html" method="POST">';
+								echo '<input type="hidden" name="test_id" value="'. $id . '">';
 
-							foreach($json as $key => $val) {
-								if(is_array($val) && $key != "right_answers") {
-									echo '<h3><b>'. $q++ . '. ' . $key. '</h3>';
+								foreach($json as $key => $val) {
+									if(is_array($val) && $key != "right_answers" && $key != "seen_by") {
+										echo '<h3><b>'. $q++ . '. ' . $key. '</h3>';
 
-									foreach($val as $v) {
-										echo '<div class="radio">
-													<label>
-														<input type="radio" name="optionsRadios'. $options . '" id="optionsRadios'. $options . '" value="option'. $chosen_options++ . '" checked>'. $v . '
-													</label>
-												</div>';
+										foreach($val as $v) {
+											echo '<div class="radio">
+														<label>
+															<input type="radio" name="optionsRadios'. $options . '" id="optionsRadios'. $options . '" value="option'. $chosen_options++ . '" checked>'. $v . '
+														</label>
+													</div>';
+										}
+										
+										$options++;
+										$chosen_options = 1;
 									}
-									
-									$options++;
-									$chosen_options = 1;
 								}
+								echo '<input type="hidden" name="noq" value="'. $q . '">';
+								
+								echo '<br><input type="submit" class="btn btn-success" value = "Изпрати" name="submit"/>';
+								echo '</form>';
 							}
-							echo '<input type="hidden" name="noq" value="'. $q . '">';
-							
-							echo '<br><input type="submit" class="btn btn-success" value = "Изпрати" name="submit"/>';
-							echo '</form>';
 						?>
 						
 				  </div>
