@@ -174,7 +174,14 @@
 					</script>
 					
 					<?php
-						print_r($_POST);
+						$subject = $_POST['subject'];
+						$nos = $_POST['nos'];
+						for($i = 1; $i < $nos; $i++) {
+							$mark = $_POST['student'.$i];
+							$student_id = $_POST['st_id'.$i];
+							mysql_query("UPDATE `marks` SET `ocenka` = '$mark' WHERE `student_id` = '$student_id' AND `predmet` = '$subject'");
+						}
+						
 					?>
 				</div>
 
